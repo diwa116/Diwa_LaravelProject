@@ -4,10 +4,14 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StudentController;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/dashboard', [StudentController::class, 'index'])->name('dashboard');
+Route::post('/students', [StudentController::class, 'store'])->name('students.store');
 
 Route::get('/aboutus', function() {
     return 'This is about us page';
@@ -17,9 +21,9 @@ Route::get('/homepage', function() {
     return view('homepage');
 });
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Route::view('dashboard', 'dashboard')
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
